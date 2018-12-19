@@ -57,12 +57,13 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         private Button tan;
         private Button blank; // Maybe radians/ degree button
         private DecimalFormat pFormat = new DecimalFormat("#.##########");
+        private Stage secondary;
+        private GUI option = new GUI(100,100);
     public static void main(String[] args){
         launch(args);
     }
     @Override
-    public void start(Stage PrimaryStage) throws Exception{
-        Stage window = PrimaryStage;
+    public void start(Stage window) throws Exception{
         createButtons();
         GridPane base = formatButtons();
         Scene layout = new Scene(base,246,305);
@@ -200,11 +201,23 @@ public class Main extends Application implements EventHandler<ActionEvent> {
                 }
             });
         }
+
+        /////// Draw button functionality
+
         draw.setOnAction(event -> {
-            Stage secondary = new Stage();
-            GUI option = new GUI(100,100);
+            secondary = new Stage();
             secondary.setScene(option.make());
+            secondary.setResizable(false);
             secondary.show();
+            Button[] storehouse = option.germane();
+            for (Button x : storehouse){
+                x.setOnAction(event1 -> {
+                    Stage graph = new Stage();
+                    graph.setScene(option.selection(x));
+                    graph.show();
+                    secondary.close();
+                });
+            }
         });
         dot.setOnAction(event -> {
             HashMap<Character,Integer> cycle = new HashMap<>();
@@ -238,7 +251,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
             }
             else if (curr.length() > 0 && operator.equals("Sin") || operator.equals("Tan") || operator.equals("Cos") || operator.equals("ln")){
                 double eval = 0;
-                double result = 0;
+                double result;
                 switch (operator){
                     case "Sin":
                         eval = Math.sin(Double.parseDouble(curr));
@@ -265,8 +278,8 @@ public class Main extends Application implements EventHandler<ActionEvent> {
                 bank.setText(curr);
             }
             else if (curr.length() > 0 && operator.equals("Sin") || operator.equals("Tan") || operator.equals("Cos") || operator.equals("ln")){
-                double eval = 0;
-                double result = 0;
+                double eval = 0.0;
+                double result;
                 switch (operator){
                     case "Sin":
                         eval = Math.sin(Double.parseDouble(curr));
@@ -294,7 +307,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
             }
             else if (curr.length() > 0 && operator.equals("Sin") || operator.equals("Tan") || operator.equals("Cos") || operator.equals("ln")){
                 double eval = 0;
-                double result = 0;
+                double result;
                 switch (operator){
                     case "Sin":
                         eval = Math.sin(Double.parseDouble(curr));
@@ -387,7 +400,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
                 operator = "+";
             }
             // Multiple chained operations?
-            else if (curr.length() > 0 && first.length() > 0 && operator == "+"){
+            else if (curr.length() > 0 && first.length() > 0 && operator.equals("+")){
                 second = curr;
                 double r = Double.parseDouble(first) + Double.parseDouble(second);
                 curr = d.format(r);
@@ -440,7 +453,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
                 operator = "-";
             }
             // Multiple chained operations?
-            else if (curr.length() > 0 && first.length() > 0 && operator == "-"){
+            else if (curr.length() > 0 && first.length() > 0 && operator.equals("-")){
                 second = curr;
                 double r = Double.parseDouble(first) - Double.parseDouble(second);
                 curr = d.format(r);
@@ -493,7 +506,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
                 operator = "*";
             }
             // Multiple chained operations?
-            else if (curr.length() > 0 && first.length() > 0 && operator == "*"){
+            else if (curr.length() > 0 && first.length() > 0 && operator.equals("*")){
                 second = curr;
                 double r = Double.parseDouble(first) * Double.parseDouble(second);
                 curr = d.format(r);
@@ -598,26 +611,28 @@ public class Main extends Application implements EventHandler<ActionEvent> {
                     second = curr;
                 }
                 else if(operator.equals("Sin") || operator.equals("Tan") || operator.equals("Cos") || operator.equals("ln")){
-
                     switch (operator){
                         case "Sin":
                             second = Double.toString(Math.sin(Double.parseDouble(curr)));
+                            operator = operator2;
                             break;
                         case "Cos":
                             second = Double.toString(Math.cos(Double.parseDouble(curr)));
+                            operator = operator2;
                             break;
                         case "Tan":
                             second = Double.toString(Math.tan(Double.parseDouble(curr)));
+                            operator = operator2;
                             break;
                         case "ln":
                             second = Double.toString(Math.log(Double.parseDouble(curr)));
+                            operator = operator2;
                             break;
                     }
                 }
                 double num1 = Double.parseDouble(first);
                 double num2 = Double.parseDouble(second);
                 Calculator calc = new Calculator(num1,num2);
-                operator = operator2;
                 switch (operator) {
                     case "+":
                         result = calc.add();
@@ -644,7 +659,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
                 bank.setText(curr);
 
             }
-            else if(operator.equals("Sin") || operator.equals("Cos") || operator.equals("Tan") || operator.equals("ln") && first == ""){
+            else if(operator.equals("Sin") || operator.equals("Cos") || operator.equals("Tan") || operator.equals("ln") && first.equals("")){
                 switch (operator){
                     case "Sin":
                         result = Math.sin(Double.parseDouble(curr));
@@ -671,6 +686,6 @@ public class Main extends Application implements EventHandler<ActionEvent> {
 
 }
 
-
+// overflow when dealing with large numbers
 // Add support for SIN/TAN/COS/LN operation to come after operator
 // Thinking about cloning first addition operator with switch statements
