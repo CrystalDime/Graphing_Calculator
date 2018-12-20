@@ -4,11 +4,15 @@ package Logic;
 
 
 import GUI.GUI;
+import GUI.Graph;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.ScatterChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -59,6 +63,9 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         private DecimalFormat pFormat = new DecimalFormat("#.##########");
         private Stage secondary;
         private GUI option = new GUI(100,100);
+        private Stage drawWindow;
+        private Button submit = new Button("filler");
+        private TextField field;
     public static void main(String[] args){
         launch(args);
     }
@@ -202,6 +209,9 @@ public class Main extends Application implements EventHandler<ActionEvent> {
             });
         }
 
+
+
+
         /////// Draw button functionality
 
         draw.setOnAction(event -> {
@@ -212,10 +222,23 @@ public class Main extends Application implements EventHandler<ActionEvent> {
             Button[] storehouse = option.germane();
             for (Button x : storehouse){
                 x.setOnAction(event1 -> {
-                    Stage graph = new Stage();
-                    graph.setScene(option.selection(x));
-                    graph.show();
+                    drawWindow = new Stage();
+                    drawWindow.setScene(option.selection(x));
+                    submit = option.relevant();
+                    field = option.text();
+                    System.out.println(submit.toString());
+                    drawWindow.show();
                     secondary.close();
+                    submit.setOnAction(event3 -> {
+                        String equation = (field.getCharacters().toString());
+                        Graph graph = new Graph(equation,option.state());
+                        Scene graph2 = graph.parse();
+                        Stage plot = new Stage();
+                        plot.setScene(graph2);
+                        plot.setMaximized(true);
+                        plot.show();
+
+                    });
                 });
             }
         });

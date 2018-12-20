@@ -14,6 +14,9 @@ public class GUI{
     private int width;
     private int height;
     private Button[] safe;
+    private Button submit = new Button("wow");
+    private String state;
+    private TextField field;
     public GUI(int w,int h){
         this.width = w;
         this.height = h;
@@ -42,17 +45,17 @@ public class GUI{
         return  new Scene(this.format(),width,height);
     }
     private Scene line(){
-        TextField field = new TextField("Please enter equation here");
+        state = "linear";
+        field = new TextField("Please enter equation here");
         field.setMaxWidth(246/1.3);
         Text title = new Text("Line Graph");
-        title.setStyle(    "-fx-font: 20px Tahoma; -fx-fill: linear-gradient(from 0% 0% to 100% 200%, repeat, aqua 0%, red 50%); -fx-stroke: black; -fx-stroke-width: 1;");
+        title.setStyle(    "-fx-font: 20px Tahoma; -fx-stroke: black; -fx-stroke-width: 1;");
         title.setTextAlignment(TextAlignment.CENTER);
         Text guide = new Text("y = mx + b");
         guide.setTextAlignment(TextAlignment.CENTER);
-        Button submit = new Button("Graph!");
+        submit = new Button("Graph!");
         submit.setStyle("-fx-background-color: rgb(225, 228, 203)");
         submit.setStyle("-fx-base: rgb(169,169,169)");
-        submit.setOnAction(event -> System.out.println(field.getCharacters()));
         submit.setAlignment(Pos.CENTER);
         field.setAlignment(Pos.CENTER);
         VBox base = new VBox(8);
@@ -61,17 +64,17 @@ public class GUI{
         return new Scene(base,246,305);
     }
     private Scene exponential(){
-        TextField field = new TextField("Please enter equation here");
+        state = "exponential";
+        field = new TextField("Please enter equation here");
         field.setMaxWidth(246/1.3);
         Text title = new Text("Exponential Graph");
-        title.setStyle(    "-fx-font: 20px Tahoma; -fx-fill: linear-gradient(from 0% 0% to 100% 200%, repeat, aqua 0%, red 50%); -fx-stroke: black; -fx-stroke-width: 1;");
+        title.setStyle(    "-fx-font: 20px Tahoma;  -fx-stroke: black; -fx-stroke-width: 1;");
         title.setTextAlignment(TextAlignment.CENTER);
         Text guide = new Text("y = ab^x");
         guide.setTextAlignment(TextAlignment.CENTER);
-        Button submit = new Button("Graph!");
+        submit = new Button("Graph!");
         submit.setStyle("-fx-background-color: rgb(225, 228, 203)");
         submit.setStyle("-fx-base: rgb(169,169,169)");
-        submit.setOnAction(event -> System.out.println(field.getCharacters()));
         submit.setAlignment(Pos.CENTER);
         field.setAlignment(Pos.CENTER);
         VBox base = new VBox(8);
@@ -80,17 +83,17 @@ public class GUI{
         return new Scene(base,246,305);
     }
     private Scene quad(){
-        TextField field = new TextField("Please enter equation here");
+        state = "quadratic";
+        field = new TextField("Please enter equation here");
         field.setMaxWidth(246/1.3);
         Text title = new Text("Quadratic Graph");
-        title.setStyle(    "-fx-font: 20px Tahoma; -fx-fill: linear-gradient(from 0% 0% to 100% 200%, repeat, aqua 0%, red 50%); -fx-stroke: black; -fx-stroke-width: 1;");
+        title.setStyle(    "-fx-font: 20px Tahoma;  -fx-stroke: black; -fx-stroke-width: 1;");
         title.setTextAlignment(TextAlignment.CENTER);
         Text guide = new Text("y = ax^2 + bx + c");
         guide.setTextAlignment(TextAlignment.CENTER);
-        Button submit = new Button("Graph!");
+        submit = new Button("Graph!");
         submit.setStyle("-fx-background-color: rgb(225, 228, 203)");
         submit.setStyle("-fx-base: rgb(169,169,169)");
-        submit.setOnAction(event -> System.out.println(field.getCharacters()));
         submit.setAlignment(Pos.CENTER);
         field.setAlignment(Pos.CENTER);
         VBox base = new VBox(8);
@@ -107,6 +110,12 @@ public class GUI{
     public Button[] germane(){
         return safe;
     }
+
+    public Button relevant(){return submit;}
+
+    public String state(){return state;}
+
+    public TextField text(){return field;}
 
 
 
