@@ -46,7 +46,7 @@ public class GUI{
     }
     private Scene line(){
         state = "linear";
-        field = new TextField("Please enter equation here");
+        field = new TextField("y = ");
         field.setMaxWidth(246/1.3);
         Text title = new Text("Line Graph");
         title.setStyle(    "-fx-font: 20px Tahoma; -fx-stroke: black; -fx-stroke-width: 1;");
@@ -65,12 +65,12 @@ public class GUI{
     }
     private Scene exponential(){
         state = "exponential";
-        field = new TextField("Please enter equation here");
+        field = new TextField("y =");
         field.setMaxWidth(246/1.3);
         Text title = new Text("Exponential Graph");
         title.setStyle(    "-fx-font: 20px Tahoma;  -fx-stroke: black; -fx-stroke-width: 1;");
         title.setTextAlignment(TextAlignment.CENTER);
-        Text guide = new Text("y = ab^x");
+        Text guide = new Text("y = a^x");
         guide.setTextAlignment(TextAlignment.CENTER);
         submit = new Button("Graph!");
         submit.setStyle("-fx-background-color: rgb(225, 228, 203)");
@@ -84,7 +84,7 @@ public class GUI{
     }
     private Scene quad(){
         state = "quadratic";
-        field = new TextField("Please enter equation here");
+        field = new TextField("y = ");
         field.setMaxWidth(246/1.3);
         Text title = new Text("Quadratic Graph");
         title.setStyle(    "-fx-font: 20px Tahoma;  -fx-stroke: black; -fx-stroke-width: 1;");
